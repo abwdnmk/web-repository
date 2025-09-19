@@ -35,7 +35,7 @@ export const putResign = (worker_id) => {
 //删除接口的实现
 export const employeeDelete = (worker_id) => {
     return request({
-        url: 'del',
+        url: '/worker/delete',
         method: 'DELETE',
         data: { worker_id }
     })

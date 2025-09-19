@@ -153,6 +153,8 @@ const handleDelete = async (worker_id) => {
 //删除功能
 const employeeDeletex = async (worker_id) => {
   const req = await employeeDelete(worker_id)
+  console.log(req)
+  ElMessage({ type: 'success', message: "员工删除成功" })
   getList()
 }
 

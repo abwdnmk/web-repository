@@ -29,12 +29,7 @@
               <el-input placeholder="请输入所属公司"></el-input>
             </el-form-item>
             <el-form-item label="创建时间">
-              <el-date-picker
-                v-model="hireDate"
-                type="date"
-                placeholder="选择创建日期"
-                style="width: 100%"
-              />
+              <el-date-picker v-model="hireDate" type="date" placeholder="选择创建日期" style="width: 100%" />
             </el-form-item>
           </el-form>
         </div>
@@ -49,63 +44,16 @@
 
     <!-- 项目列表 -->
     <div class="list">
-      <el-table
-        :data="tableData"
-        style="width: 100%"
-        :header-cell-style="{ color: '#000000', background: '#F7F7F9' }"
-      >
-        <el-table-column
-          prop="projectId"
-          label="项目ID"
-          width="auto"
-          align="center"
-          header-align="center"
-        />
-        <el-table-column
-          prop="projectName"
-          label="项目名称"
-          width="auto"
-          align="center"
-          header-align="center"
-        />
-        <el-table-column
-          prop="creator"
-          label="创建人"
-          width="auto"
-          align="center"
-          header-align="center"
-        />
-        <el-table-column
-          prop="belongedCompany"
-          label="所属公司"
-          width="auto"
-          align="center"
-          header-align="center"
-        />
-        <el-table-column
-          prop="creationTime"
-          label="创建时间"
-          width="auto"
-          align="center"
-          header-align="center"
-        />
-        <el-table-column
-          label="操作"
-          width="auto"
-          align="center"
-          header-align="center"
-        >
+      <el-table :data="tableData" style="width: 100%" :header-cell-style="{ color: '#000000', background: '#F7F7F9' }">
+        <el-table-column prop="projectId" label="项目ID" width="auto" align="center" header-align="center" />
+        <el-table-column prop="projectName" label="项目名称" width="auto" align="center" header-align="center" />
+        <el-table-column prop="creator" label="创建人" width="auto" align="center" header-align="center" />
+        <el-table-column prop="belongedCompany" label="所属公司" width="auto" align="center" header-align="center" />
+        <el-table-column prop="creationTime" label="创建时间" width="auto" align="center" header-align="center" />
+        <el-table-column label="操作" width="auto" align="center" header-align="center">
           <template #default="scope">
-            <el-button
-              type="primary"
-              icon="Edit"
-              @click="handleEdit(scope.row)"
-            ></el-button>
-            <el-button
-              type="danger"
-              icon="Delete"
-              @click="handleDelete(scope.row)"
-            ></el-button>
+            <el-button type="primary" icon="Edit" @click="handleEdit(scope.row)"></el-button>
+            <el-button type="danger" icon="Delete" @click="handleDelete(scope.row)"></el-button>
           </template>
         </el-table-column>
       </el-table>

@@ -15,20 +15,12 @@
         </template>
         <hr />
         <div style="text-align: center">
-          <el-form label-position="top" style="margin-top: 20px">
-            <el-form-item label="公司名称">
-              <el-input placeholder="请输入公司名称"></el-input>
+          <el-form :model="firmform" :rules="rules" label-position="top" style="margin-top: 20px">
+            <el-form-item label="公司名称" prop="firmName">
+              <el-input v-model="firmform.firmName" placeholder="请输入公司名称"></el-input>
             </el-form-item>
-            <el-form-item label="管理员">
-              <el-input placeholder="请输入管理员"></el-input>
-            </el-form-item>
-            <el-form-item label="创建时间">
-              <el-date-picker
-                v-model="hireDate"
-                type="date"
-                placeholder="选择创建日期"
-                style="width: 100%"
-              />
+            <el-form-item label="管理员" prop="firmMaster">
+              <el-input v-model="firmform.firmMaster" placeholder="请输入管理员"></el-input>
             </el-form-item>
           </el-form>
         </div>
@@ -43,36 +35,16 @@
 
     <!-- 公司列表 -->
     <div class="list">
-      <el-table
-        :data="tableData"
-        style="width: 100%"
-        :header-cell-style="{ color: '#000000', background: '#F7F7F9' }"
-      >
-        <el-table-column
-          prop="serialNumber"
-          label="序号"
-          width="100"
-          align="center"
-          header-align="center"
-        />
-        <el-table-column
-          prop="companyName"
-          label="公司名称"
-          width="auto"
-          align="center"
-          header-align="center"
-        />
-        <el-table-column
-          prop="adminInfo"
-          label="管理员"
-          width="auto"
-          align="center"
-          header-align="center"
-        >
+      <el-table :data="tableData" style="width: 100%" :header-cell-style="{ color: '#000000', background: '#F7F7F9' }">
+        <el-table-column prop="serialNumber" label="序号" width="100" align="center" header-align="center" />
+        <el-table-column prop="companyName" label="公司名称" width="auto" align="center" header-align="center" />
+        <el-table-column prop="adminInfo" label="管理员" width="auto" align="center" header-align="center">
           <template #default="scope">
             <div style="display: flex; align-items: center">
               <div style="margin-right: 20px">
-                <el-icon style="font-size: 24px"><User /></el-icon>
+                <el-icon style="font-size: 24px">
+                  <User />
+                </el-icon>
               </div>
               <div style="text-align: left; line-height: 1.5">
                 <div>{{ scope.row.adminInfo.chineseName }}</div>
@@ -81,30 +53,11 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="creationTime"
-          label="创建时间"
-          width="auto"
-          align="center"
-          header-align="center"
-        />
-        <el-table-column
-          label="操作"
-          width="auto"
-          align="center"
-          header-align="center"
-        >
+        <el-table-column prop="creationTime" label="创建时间" width="auto" align="center" header-align="center" />
+        <el-table-column label="操作" width="auto" align="center" header-align="center">
           <template #default="scope">
-            <el-button
-              type="primary"
-              icon="Edit"
-              @click="handleEdit(scope.row)"
-            />
-            <el-button
-              type="danger"
-              icon="Delete"
-              @click="handleDelete(scope.row)"
-            />
+            <el-button type="primary" icon="Edit" @click="handleEdit(scope.row)" />
+            <el-button type="danger" icon="Delete" @click="handleDelete(scope.row)" />
           </template>
         </el-table-column>
       </el-table>
@@ -112,92 +65,43 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import { ref } from "vue";
+<script setup>
+import { onMounted, ref } from "vue";
+// import { getFirm, postFirm, deleteFirm } from '@/apis/firm'
 
 // 弹出添加公司表单
 const dialogVisible = ref(false);
-// 入职时间
-const hireDate = ref("");
 
 // 添加公司按钮
 function addFirm() {
   dialogVisible.value = true;
 }
 
-// 保存按钮
-function handleAddFirm() {
-  // 这里可以添加表单校验和提交逻辑
-  dialogVisible.value = false;
-}
+// const list = ref([])
 
-// 模拟管理员数据
-const tableData = [
-  {
-    serialNumber: 1,
-    companyName: "字节跳动",
-    adminInfo: {
-      chineseName: "张三",
-      email: "zhangsan.@example.com",
-    },
-    creationTime: "2023-01-15",
-  },
-  {
-    serialNumber: 2,
-    companyName: "阿里巴巴",
-    adminInfo: {
-      chineseName: "李四",
-      email: "lisi.@example.com",
-    },
-    creationTime: "2023-02-20",
-  },
-  {
-    serialNumber: 3,
-    companyName: "腾讯",
-    adminInfo: {
-      chineseName: "王五",
-      email: "wangwu.@example.com",
-    },
-    creationTime: "2023-03-10",
-  },
-  {
-    serialNumber: 4,
-    companyName: "百度",
-    adminInfo: {
-      chineseName: "赵六",
-      email: "zhaoliu.@example.com",
-    },
-    creationTime: "2023-04-05",
-  },
-  {
-    serialNumber: 5,
-    companyName: "华为",
-    adminInfo: {
-      chineseName: "孙七",
-      email: "sunqi.@example.com",
-    },
-    creationTime: "2023-05-12",
-  },
-  {
-    serialNumber: 6,
-    companyName: "小米",
-    adminInfo: {
-      chineseName: "周八",
-      email: "zhouba.@example.com",
-    },
-    creationTime: "2023-06-18",
-  },
-];
+// const getListFirm = async () => {
+//   const res = await getFirm()
+//   list.value = res
+// }
 
-// 编辑按钮
-function handleEdit(row) {
-  console.log("编辑", row);
-}
+// onMounted(() => {
+//   getListFirm()
+// })
 
-// 删除按钮
-function handleDelete(row) {
-  console.log("删除", row);
-}
+const firmform = ref({
+  firmName: "",
+  firmMaster: ""
+})
+
+const rules = ref({
+  firmName: [
+    { required: true, message: '公司名称不能为空', trigger: 'blur' }
+  ],
+  firmMaster: [
+    { required: true, message: '管理员不能为空', trigger: 'blur' }
+  ]
+})
+
 </script>
 
 <style scoped>
