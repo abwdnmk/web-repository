@@ -15,17 +15,14 @@
         </template>
         <hr />
         <div style="text-align: center">
-          <el-form :model="firmform" :rules="rules" label-position="top" style="margin-top: 20px">
-            <el-form-item label="公司名称" prop="firmName">
-              <el-input v-model="firmform.firmName" placeholder="请输入公司名称"></el-input>
-            </el-form-item>
-            <el-form-item label="管理员" prop="firmMaster">
-              <el-input v-model="firmform.firmMaster" placeholder="请输入管理员"></el-input>
+          <el-form :model="firmform" :rules="rules" ref="ruleFormref" label-position="top" style="margin-top: 20px">
+            <el-form-item label="公司名称" prop="company_name">
+              <el-input v-model="firmform.company_name" placeholder="请输入公司名称"></el-input>
             </el-form-item>
           </el-form>
         </div>
         <template #footer>
-          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button @click="cancelFirm">取 消</el-button>
           <el-button type="primary" @click="handleAddFirm">保 存</el-button>
         </template>
       </el-dialog>
@@ -35,29 +32,15 @@
 
     <!-- 公司列表 -->
     <div class="list">
-      <el-table :data="tableData" style="width: 100%" :header-cell-style="{ color: '#000000', background: '#F7F7F9' }">
-        <el-table-column prop="serialNumber" label="序号" width="100" align="center" header-align="center" />
-        <el-table-column prop="companyName" label="公司名称" width="auto" align="center" header-align="center" />
-        <el-table-column prop="adminInfo" label="管理员" width="auto" align="center" header-align="center">
-          <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <div style="margin-right: 20px">
-                <el-icon style="font-size: 24px">
-                  <User />
-                </el-icon>
-              </div>
-              <div style="text-align: left; line-height: 1.5">
-                <div>{{ scope.row.adminInfo.chineseName }}</div>
-                <div>{{ scope.row.adminInfo.email }}</div>
-              </div>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column prop="creationTime" label="创建时间" width="auto" align="center" header-align="center" />
+      <el-table :data="listfirm" style="width: 100%" :header-cell-style="{ color: '#000000', background: '#F7F7F9' }">
+        <el-table-column prop="company_id" label="序号" width="100" align="center" header-align="center" />
+        <el-table-column prop="company_name" label="公司名称" width="auto" align="center" header-align="center" />
+        <el-table-column prop="company_admin" label="管理员" width="auto" align="center" header-align="center" />
+        <el-table-column prop="company_time" label="创建时间" width="auto" align="center" header-align="center" />
         <el-table-column label="操作" width="auto" align="center" header-align="center">
-          <template #default="scope">
-            <el-button type="primary" icon="Edit" @click="handleEdit(scope.row)" />
-            <el-button type="danger" icon="Delete" @click="handleDelete(scope.row)" />
+          <template #default="{ row }">
+            <el-button type="primary" icon="Edit" @click="handleEdit(row.company_id)" />
+            <el-button type="danger" icon="Delete" @click="handleDelete(row.company_id)" />
           </template>
         </el-table-column>
       </el-table>
@@ -67,7 +50,9 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-// import { getFirm, postFirm, deleteFirm } from '@/apis/firm'
+import { getFirm, postFirm, deleteFirm } from '@/apis/firm'
+import 'element-plus/es/components/message/style/css'
+import { ElMessage } from "element-plus";
 
 // 弹出添加公司表单
 const dialogVisible = ref(false);
@@ -77,30 +62,63 @@ function addFirm() {
   dialogVisible.value = true;
 }
 
-// const list = ref([])
+const cancelFirm = () => {
+  dialogVisible.value = false
+  ruleFormref.value?.resetFields()
+}
 
-// const getListFirm = async () => {
-//   const res = await getFirm()
-//   list.value = res
-// }
+const ruleFormref = ref()
 
-// onMounted(() => {
-//   getListFirm()
-// })
+const listfirm = ref([])
+
+const getListFirm = async () => {
+  const res = await getFirm()
+  listfirm.value = res
+  console.log(res)
+}
+
+onMounted(() => {
+  getListFirm()
+})
 
 const firmform = ref({
-  firmName: "",
-  firmMaster: ""
+  company_name: "",
+  company_admin: ""
 })
 
 const rules = ref({
-  firmName: [
+  company_name: [
     { required: true, message: '公司名称不能为空', trigger: 'blur' }
-  ],
-  firmMaster: [
-    { required: true, message: '管理员不能为空', trigger: 'blur' }
   ]
 })
+
+const handleAddFirm = () => {
+  ruleFormref.value.validate(async (valid) => {
+    if (valid) {
+      firmform.value.company_admin = "1"
+      console.log(firmform.value)
+      const rex = await postFirm(firmform.value)
+      console.log(rex)
+      getListFirm()
+      if (rex.code === 200) {
+        ElMessage({ type: 'success', message: rex.msg })
+        ruleFormref.value?.resetFields()
+        dialogVisible.value = false
+      }
+      else {
+        ElMessage({ type: 'warning', message: "公司名称重复" })
+      }
+    }
+  })
+}
+
+//删除功能
+const handleDelete = async (company_id) => {
+  console.log(company_id)
+  const req = await deleteFirm(company_id)
+  getListFirm()
+  ElMessage({ type: 'success', message: req.msg })
+}
 
 </script>
 

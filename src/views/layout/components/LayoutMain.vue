@@ -19,7 +19,6 @@
                             <!-- 卡片内容 -->
                             <div class="card-content">
                                 <div>{{ item.title }}</div>
-                                <div>{{ item.description }}</div>
                             </div>
                         </el-card>
 
@@ -44,27 +43,30 @@ import unit5 from '@/assets/LayoutMain/unit5.png'
 const cardList = ref([
     {
         title: '示例卡片1',
-        description: '',
         imgUrl: unit1
     },
     {
         title: '示例卡片2',
-        description: '这是第二个卡片的描述文本',
         imgUrl: unit2
     },
     {
         title: '示例卡片3',
-        description: '简洁的卡片内容展示',
         imgUrl: unit3
     },
     {
         title: '示例卡片4',
-        description: '基础卡片列表展示示例',
         imgUrl: unit4
     },
     {
         title: '示例卡片5',
-        description: '基础卡片列表展示示例',
+        imgUrl: unit5
+    },
+    {
+        title: '示例卡片6',
+        imgUrl: unit5
+    },
+    {
+        title: '示例卡片7',
         imgUrl: unit5
     }
 
@@ -105,8 +107,22 @@ const cardList = ref([
 }
 
 .card-container {
-    height: 55vh;
+    /* height: 55vh;
+    width: 100%; */
+
+    max-height: 55vh;
+    /* 使用最大高度而非固定高度 */
     width: 100%;
+    overflow-y: auto;
+    /* 启用垂直滚动 */
+    padding-right: 10px;
+    /* 为滚动条预留空间，避免内容被遮挡 */
+    box-sizing: border-box;
+}
+
+/* 自定义滚动条样式（可选） */
+.card-container::-webkit-scrollbar {
+    width: 8px;
 }
 
 .mb-6 {
@@ -124,6 +140,17 @@ const cardList = ref([
 
     /* 清除卡片图片与边框的默认边距 */
     --el-card-padding: 0;
+
+    cursor: pointer;
+    /* 添加指针样式，表示可点击 */
+    transition: transform 0.2s, box-shadow 0.2s;
+    /* 添加过渡效果 */
+}
+
+/* 卡片悬停效果（可选增强） */
+.card-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* 图片区域：固定高度（可选） */

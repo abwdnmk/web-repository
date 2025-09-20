@@ -4,20 +4,8 @@
       <h1>条例详情管理</h1>
 
       <div class="header-right">
-        <el-select
-          v-model="value"
-          clearable
-          filterable
-          placeholder="所有项目"
-          style="width: 140px"
-          class="select"
-        >
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+        <el-select v-model="value" clearable filterable placeholder="所有项目" style="width: 140px" class="select">
+          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
 
         <!-- 新建条例按钮 -->
@@ -41,12 +29,7 @@
               <el-input placeholder="请输入员工姓名"></el-input>
             </el-form-item>
             <el-form-item label="入职时间">
-              <el-date-picker
-                v-model="hireDate"
-                type="date"
-                placeholder="选择入职日期"
-                style="width: 100%"
-              />
+              <el-date-picker v-model="hireDate" type="date" placeholder="选择入职日期" style="width: 100%" />
             </el-form-item>
             <el-form-item>
               <el-checkbox>是否离职</el-checkbox>
@@ -64,86 +47,21 @@
 
     <!-- 条例列表 -->
     <div class="list">
-      <el-table
-        :data="tableData"
-        style="width: 100%"
-        :header-cell-style="{ color: '#000000', background: '#F7F7F9' }"
-      >
-        <el-table-column
-          prop="belongingProject"
-          label="所属项目"
-          width="auto"
-          align="center"
-          header-align="center"
-        />
-        <el-table-column
-          prop="regulationsName"
-          label="条例名称"
-          width="auto"
-          align="center"
-          header-align="center"
-        />
-        <el-table-column
-          prop="recordPerson"
-          label="记录人"
-          width="auto"
-          align="center"
-          header-align="center"
-        />
-        <el-table-column
-          prop="type"
-          label="类型"
-          width="auto"
-          align="center"
-          header-align="center"
-        />
-        <el-table-column
-          prop="amount"
-          label="金额"
-          width="auto"
-          align="center"
-          header-align="center"
-        />
-        <el-table-column
-          label="操作"
-          width="auto"
-          align="center"
-          header-align="center"
-        >
+      <el-table :data="tableData" style="width: 100%" :header-cell-style="{ color: '#000000', background: '#F7F7F9' }">
+        <el-table-column prop="belongingProject" label="所属项目" width="auto" align="center" header-align="center" />
+        <el-table-column prop="regulationsName" label="条例名称" width="auto" align="center" header-align="center" />
+        <el-table-column prop="recordPerson" label="记录人" width="auto" align="center" header-align="center" />
+        <el-table-column prop="type" label="类型" width="auto" align="center" header-align="center" />
+        <el-table-column prop="amount" label="金额" width="auto" align="center" header-align="center" />
+        <el-table-column prop="taxRate" label="税率" width="auto" align="center" header-align="center" />
+        <el-table-column prop="taxAmount" label="税金" width="auto" align="center" header-align="center" />
+        <el-table-column prop="recordTime" label="记录时间" width="auto" align="center" header-align="center" />
+        <el-table-column label="操作" width="auto" align="center" header-align="center">
           <template #default="scope">
-            <el-button
-              type="primary"
-              icon="Edit"
-              @click="handleEdit(scope.row)"
-            ></el-button>
-            <el-button
-              type="danger"
-              icon="Delete"
-              @click="handleDelete(scope.row)"
-            ></el-button>
+            <el-button type="primary" icon="Edit" @click="handleEdit(scope.row)"></el-button>
+            <el-button type="danger" icon="Delete" @click="handleDelete(scope.row)"></el-button>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="taxRate"
-          label="税率"
-          width="auto"
-          align="center"
-          header-align="center"
-        />
-        <el-table-column
-          prop="taxAmount"
-          label="税金"
-          width="auto"
-          align="center"
-          header-align="center"
-        />
-        <el-table-column
-          prop="recordTime"
-          label="记录时间"
-          width="auto"
-          align="center"
-          header-align="center"
-        />
       </el-table>
     </div>
   </div>
@@ -178,7 +96,7 @@ const tableData = [
     amount: 10000,
     taxRate: "10%",
     taxAmount: 1000,
-    recordTime: "2023-10-01 10:00",
+    recordTime: "2023-10-01",
   },
   {
     belongingProject: "项目B",
@@ -188,7 +106,7 @@ const tableData = [
     amount: 5000,
     taxRate: "5%",
     taxAmount: 250,
-    recordTime: "2023-10-02 11:00",
+    recordTime: "2023-10-02",
   },
 ];
 

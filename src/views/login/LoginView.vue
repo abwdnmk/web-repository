@@ -69,10 +69,10 @@ const onSubmit = () => {
     if (valid) {
       const ress = await userStore.getUserInfo(form)
       console.log("后端数据", ress)
-      console.log("更新后的useinfo", userStore.userInfo)
-      console.log("更新后的useinfo", userStore.userToken)
+      // console.log("更新后的useinfo", userStore.userInfo)
+      // console.log("更新后的useinfo", userStore.userToken)
       if (ress.code === 200) {
-        ElMessage({ type: 'success', message: '登录成功' })
+        ElMessage({ type: 'success', message: ress.msg })
         router.replace({ path: '/' })
       }
       else {

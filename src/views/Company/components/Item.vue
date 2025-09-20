@@ -22,12 +22,6 @@
             <el-form-item label="项目名称">
               <el-input placeholder="请输入项目名称"></el-input>
             </el-form-item>
-            <el-form-item label="创建人">
-              <el-input placeholder="请输入创建人"></el-input>
-            </el-form-item>
-            <el-form-item label="所属公司">
-              <el-input placeholder="请输入所属公司"></el-input>
-            </el-form-item>
             <el-form-item label="创建时间">
               <el-date-picker v-model="hireDate" type="date" placeholder="选择创建日期" style="width: 100%" />
             </el-form-item>
