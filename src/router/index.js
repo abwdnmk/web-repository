@@ -39,12 +39,13 @@ const routes = [
             {
                 path: 'employee',
                 name: 'CompanyEmployee',
-                component: CompanyEmployee
+                component: CompanyEmployee,
             },
             {
                 path: 'firm',
                 name: 'CompanyFirm',
-                component: CompanyFirm
+                component: CompanyFirm,
+                props: true
             },
             {
                 path: 'regulations',

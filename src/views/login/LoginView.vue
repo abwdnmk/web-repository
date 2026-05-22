@@ -38,14 +38,13 @@ import 'element-plus/es/components/message/style/css'
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user'
-// import { loginAPI } from '@/apis/user'
 
 const router = useRouter()
 const userStore = useUserStore()
 
 const form = ref({
-  account: "",
-  password: ""
+  account: "admin",
+  password: "123456"
 })
 
 const rules = ref({
@@ -65,18 +64,24 @@ const ruleFormref = ref(null)
 //登录按钮
 const onSubmit = () => {
   ruleFormref.value.validate(async (valid) => {
-    console.log(valid)
     if (valid) {
-      const ress = await userStore.getUserInfo(form)
-      console.log("后端数据", ress)
-      // console.log("更新后的useinfo", userStore.userInfo)
-      // console.log("更新后的useinfo", userStore.userToken)
-      if (ress.code === 200) {
-        ElMessage({ type: 'success', message: ress.msg })
-        router.replace({ path: '/' })
+      // const ress = await userStore.getUserInfo(form)
+      // console.log("后端数据", ress)
+      // if (ress.code === 200) {
+      //   ElMessage({ type: 'success', message: ress.msg })
+      //   router.replace({ path: '/' })
+      // }
+      // else {
+      //   ElMessage({ type: 'error', message: ress.msg })
+      // }
+      if (form.value.account === 'admin' && form.value.password === '123456') {
+        ElMessage.success('登录成功')
+        router.push({ path: '/', })
+        userStore.userToken = '0'
+        console.log(userStore.userToken)
       }
       else {
-        ElMessage({ type: 'error', message: ress.msg })
+        ElMessage.error('账号或密码错误')
       }
     }
   })
@@ -99,7 +104,7 @@ const onSubmit = () => {
   justify-content: center;
   align-items: center;
   /* 关键问题 */
-  min-height: 97.8vh;
+  min-height: 100vh;
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradient 10s ease infinite;

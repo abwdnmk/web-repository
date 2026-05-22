@@ -3,9 +3,8 @@
 <template>
     <LayoutNav></LayoutNav>
     <LayoutMain></LayoutMain>
-    <router-view></router-view>
+    <router-view></router-view>  
     <LayoutFooter></LayoutFooter>
-
 </template>
 
 <script setup>

@@ -5,6 +5,9 @@ import { loginAPI } from '@/apis/user'
 import { ref } from "vue"
 
 export const useUserStore = defineStore('user', () => {
+    //定义一个我在首页点击获得的数据
+    const idIndex = ref(0)
+
     //1.定义管理用户的state
     const userInfo = ref({})
     const userToken = ref()
@@ -18,6 +21,7 @@ export const useUserStore = defineStore('user', () => {
 
     //退出登录
     const clearUserInfo = () => {
+        idIndex.value = ''
         userInfo.value = {}
         userToken.value = ""
     }
@@ -27,7 +31,9 @@ export const useUserStore = defineStore('user', () => {
         userInfo,
         getUserInfo,
         clearUserInfo,
-        userToken
+        userToken,
+
+        idIndex
     }
 }, {
     persist: true

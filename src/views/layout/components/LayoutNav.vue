@@ -6,10 +6,10 @@
             <div class="logo icon-text"><img src="@/assets/LayoutNav/account2.png" class="logo-img">企业管理系统</div>
             <ul>
                 <!-- 多模版渲染 区分登录状态和非登录状态 是否有token-->
-                <template v-if="userStore.userToken">
+                <template v-if="userStore.userToken === '0'">
                     <li><a href=" javascript:;"><el-icon :size="20" style="margin-right: 10px;">
                                 <User />
-                            </el-icon>{{ userStore.userInfo.account }}</a></li>
+                            </el-icon> admin </a></li>
                     <li>
                         <el-popconfirm @confirm='confirm' title="确认退出吗？" confirm-button-text="确认"
                             cancel-button-text="取消">

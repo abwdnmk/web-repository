@@ -1,76 +1,94 @@
 <!-- 首页组件的主要内容位置 -->
 
 <template>
-    <a href="http://localhost:5173/company/home">进入首页</a>
+
     <div class="company-selection-page">
-        <div class="company-selection-container">
-            <div class="page-title">请选择您要访问的公司</div>
-            <div class="page-description">您有权限访问以下的公司管理系统,请选择您需要操作的公司进入系统</div>
-            <div class="card-container">
+        <template v-if="userStore.userToken === '0'">
+            <div class="company-selection-container">
+                <div class="page-title">请选择您要访问的公司</div>
+                <div class="page-description">您有权限访问以下的公司管理系统,请选择您需要操作的公司进入系统</div>
+                <div class="card-container">
 
-                <el-row :gutter="40">
-                    <!-- 循环渲染卡片 -->
-                    <el-col :lg="8" v-for="(item, index) in cardList" :key="index" class="mb-6">
+                    <el-row :gutter="40">
+                        <!-- 循环渲染卡片 -->
+                        <el-col :lg="8" v-for="(item, index) in cardList" :key="index" @click="handleCardClick(index)"
+                            class="mb-6">
 
-                        <el-card class="card-item">
-                            <!-- 卡片图片 -->
-                            <img :src="item.imgUrl" alt="卡片图片" class="card-img">
+                            <el-card class="card-item">
+                                <!-- 卡片图片 -->
+                                <img :src="item.imgUrl" alt="卡片图片" class="card-img">
 
-                            <!-- 卡片内容 -->
-                            <div class="card-content">
-                                <div>{{ item.title }}</div>
-                            </div>
-                        </el-card>
+                                <!-- 卡片内容 -->
+                                <div class="card-content">
+                                    <div style="font-size: 24px;text-align: left;">{{ item.company_name }}</div>
+                                </div>
+                            </el-card>
 
-                    </el-col>
-                </el-row>
+                        </el-col>
+                    </el-row>
 
+                </div>
             </div>
-        </div>
+        </template>
+        <template v-else>
+            <div style="height: 100%;width: 100%;display: flex;justify-content: center;align-items: center;">
+                <h1>请先登录，获取信息</h1>
+            </div>
+        </template>
     </div>
+
 
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user'
 import unit1 from '@/assets/LayoutMain/unit1.png'
 import unit2 from '@/assets/LayoutMain/unit2.png'
 import unit3 from '@/assets/LayoutMain/unit3.png'
 import unit4 from '@/assets/LayoutMain/unit4.png'
 import unit5 from '@/assets/LayoutMain/unit5.png'
 
-// 卡片列表的声明
+
+const router = useRouter()
+
+const userStore = useUserStore()
+
 const cardList = ref([
     {
-        title: '示例卡片1',
-        imgUrl: unit1
+        id: 1,
+        imgUrl: unit1,
+        company_name: '云科智能科技有限公司'
     },
     {
-        title: '示例卡片2',
-        imgUrl: unit2
+        id: 2,
+        imgUrl: unit2,
+        company_name: '恒信商务服务集团'
     },
     {
-        title: '示例卡片3',
-        imgUrl: unit3
+        id: 3,
+        imgUrl: unit3,
+        company_name: '盛世金融咨询公司'
     },
     {
-        title: '示例卡片4',
-        imgUrl: unit4
+        id: 4,
+        imgUrl: unit4,
+        company_name: '联达实业发展企业'
     },
     {
-        title: '示例卡片5',
-        imgUrl: unit5
+        id: 5,
+        imgUrl: unit5,
+        company_name: '启航财税管理中心'
     },
-    {
-        title: '示例卡片6',
-        imgUrl: unit5
-    },
-    {
-        title: '示例卡片7',
-        imgUrl: unit5
-    }
-
 ])
+
+const handleCardClick = (index) => {
+    console.log("点击的卡片id为:", index + 1)
+    userStore.idIndex = index + 1
+    console.log(typeof userStore.idIndex)
+    router.push({ path: '/company/home' })
+}
 </script>
 
 <style scoped>
@@ -171,5 +189,19 @@ const cardList = ref([
     /* 内边距（避免内容贴边） */
     overflow-y: auto;
     /* 内容超出时显示垂直滚动条 */
+}
+
+/* 超链接样式优化 */
+.enter-link {
+    display: block;
+    text-align: right;
+    color: #409eff;
+    /* Element UI 主题蓝色 */
+    text-decoration: none;
+    font-size: 22px;
+    margin-top: 8px;
+    transition: all 0.2s ease;
+    align-self: flex-end;
+    /* 确保在flex容器中右对齐 */
 }
 </style>
