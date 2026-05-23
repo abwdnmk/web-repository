@@ -9,7 +9,7 @@
                 <template v-if="userStore.userToken === '0'">
                     <li><a href=" javascript:;"><el-icon :size="20" style="margin-right: 10px;">
                                 <User />
-                            </el-icon> admin </a></li>
+                            </el-icon> {{ userStore.userInfo.account }} </a></li>
                     <li>
                         <el-popconfirm @confirm='confirm' title="确认退出吗？" confirm-button-text="确认"
                             cancel-button-text="取消">

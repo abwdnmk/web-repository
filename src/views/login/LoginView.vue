@@ -75,6 +75,7 @@ const onSubmit = () => {
       //   ElMessage({ type: 'error', message: ress.msg })
       // }
       if (form.value.account === 'admin' && form.value.password === '123456') {
+        userStore.userInfo = { account: form.value.account, password: form.value.password }
         ElMessage.success('登录成功')
         router.push({ path: '/', })
         userStore.userToken = '0'

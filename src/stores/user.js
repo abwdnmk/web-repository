@@ -12,12 +12,12 @@ export const useUserStore = defineStore('user', () => {
     const userInfo = ref({})
     const userToken = ref()
     //2.定义获取接口数据的action函数
-    const getUserInfo = async (form) => {
-        const res = await loginAPI(form.value)
-        userInfo.value = res.object
-        userToken.value = res.token
-        return res
-    }
+    // const getUserInfo = async (form) => {
+    //     const res = await loginAPI(form.value)
+    //     userInfo.value = res.object
+    //     userToken.value = res.token
+    //     return res
+    // }
 
     //退出登录
     const clearUserInfo = () => {
