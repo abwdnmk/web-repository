@@ -29,7 +29,7 @@ export const useUserStore = defineStore('user', () => {
     //3.以对象的形式将state和action返回
     return {
         userInfo,
-        getUserInfo,
+        // getUserInfo,
         clearUserInfo,
         userToken,
 
